@@ -115,6 +115,20 @@ export default {
 		onEditorReady(editor) {
 			const schema = editor.model.schema
 
+			// Set 0 pixel margin to all <p> elements
+			editor.conversion.for('downcast').add(dispatcher => {
+				dispatcher.on(
+					'insert:paragraph',
+					(evt, data, conversionApi) => {
+						const viewWriter = conversionApi.writer
+						viewWriter.setStyle('margin', '0', conversionApi.mapper.toViewElement(data.item))
+					},
+					{
+						priority: 'low',
+					}
+				)
+			})
+
 			schema.on(
 				'checkChild',
 				(evt, args) => {
