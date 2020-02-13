@@ -10,13 +10,18 @@
 				:slow-hint="t('mail', 'Indexing your messages. This can take a bit longer for larger mailboxes.')"
 			/>
 			<template v-else>
-				<EnvelopeList
+				<EnvelopeList v-if="!folder.isPriorityInbox"
 					:account="account"
 					:folder="folder"
 					:envelopes="envelopes"
 					:search-query="searchQuery"
 					:show="!showMessage"
 				/>
+					<template v-else>
+						<TitleSection :name="t('mail', 'Priority')" />
+						<TitleSection :name="t('mail', 'Starred')" />
+						<TitleSection :name="t('mail', 'Other')" />
+					</template>
 				<NewMessageDetail v-if="newMessage" />
 				<Message v-else-if="showMessage" />
 				<NoMessageSelected v-else-if="hasMessages && !isMobile" />
@@ -24,6 +29,7 @@
 		</div>
 	</AppContent>
 </template>
+
 
 <script>
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
@@ -41,6 +47,7 @@ import NoMessageSelected from './NoMessageSelected'
 import {matchError} from '../errors/match'
 import MailboxLockedError from '../errors/MailboxLockedError'
 import {wait} from '../util/wait'
+import SectionTitle from './SectionTitle'
 
 export default {
 	name: 'FolderContent',
@@ -53,6 +60,7 @@ export default {
 		Message,
 		NewMessageDetail,
 		NoMessageSelected,
+		SectionTitle,
 	},
 	mixins: [isMobile],
 	props: {
@@ -104,7 +112,9 @@ export default {
 		$route(to, from) {
 			if (to.name === 'folder') {
 				// Navigate (back) to the folder view -> (re)fetch data
-				this.loadEnvelopes()
+				if (!this.folder.isPriorityInbox) {
+					this.loadEnvelopes()
+				}
 			}
 		},
 	},
@@ -113,7 +123,11 @@ export default {
 
 		new OCA.Search(this.searchProxy, this.clearSearchProxy)
 
-		this.loadEnvelopes()
+		if (!this.folder.isPriorityInbox) {
+
+			this.loadEnvelopes()
+		}
+
 	},
 	beforeDestroy() {
 		this.alive = false
