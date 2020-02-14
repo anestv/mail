@@ -10,18 +10,19 @@
 				:slow-hint="t('mail', 'Indexing your messages. This can take a bit longer for larger mailboxes.')"
 			/>
 			<template v-else>
-				<EnvelopeList v-if="!folder.isPriorityInbox"
+				<EnvelopeList
+					v-if="!folder.isPriorityInbox"
 					:account="account"
 					:folder="folder"
 					:envelopes="envelopes"
 					:search-query="searchQuery"
 					:show="!showMessage"
 				/>
-					<template v-else>
-						<TitleSection :name="t('mail', 'Priority')" />
-						<TitleSection :name="t('mail', 'Starred')" />
-						<TitleSection :name="t('mail', 'Other')" />
-					</template>
+				<template v-else>
+					<TitleSection :name="t('mail', 'Priority')" />
+					<TitleSection :name="t('mail', 'Starred')" />
+					<TitleSection :name="t('mail', 'Other')" />
+				</template>
 				<NewMessageDetail v-if="newMessage" />
 				<Message v-else-if="showMessage" />
 				<NoMessageSelected v-else-if="hasMessages && !isMobile" />
@@ -29,7 +30,6 @@
 		</div>
 	</AppContent>
 </template>
-
 
 <script>
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
@@ -124,10 +124,8 @@ export default {
 		new OCA.Search(this.searchProxy, this.clearSearchProxy)
 
 		if (!this.folder.isPriorityInbox) {
-
 			this.loadEnvelopes()
 		}
-
 	},
 	beforeDestroy() {
 		this.alive = false

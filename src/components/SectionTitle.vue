@@ -19,7 +19,6 @@
   - along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-
 <template>
 	<div id="priority">
 		<div class="icon-mail"></div>
@@ -28,11 +27,9 @@
 </template>
 
 <script>
-	export default {
-		name: 'SectionTitle'
-	}
+export default {
+	name: 'SectionTitle',
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
