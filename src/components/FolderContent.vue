@@ -19,9 +19,9 @@
 					:show="!showMessage"
 				/>
 				<template v-else>
-					<TitleSection :name="t('mail', 'Priority')" />
-					<TitleSection :name="t('mail', 'Starred')" />
-					<TitleSection :name="t('mail', 'Other')" />
+					<SectionTitle :name="t('mail', 'Priority')" />
+					<SectionTitle :name="t('mail', 'Starred')" />
+					<SectionTitle :name="t('mail', 'Other')" />
 				</template>
 				<NewMessageDetail v-if="newMessage" />
 				<Message v-else-if="showMessage" />

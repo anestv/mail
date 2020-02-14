@@ -45,10 +45,10 @@ const translateSpecial = folder => {
 		} else {
 			return t('mail', 'Inbox')
 		}
-		if (folder.specialUse.includes('priority')) {
-			if (folder.isPriorityInbox === true) {
-				return t('mail', 'Priority inbox')
-			}
+	}
+	if (folder.specialUse.includes('priority')) {
+		if (folder.isPriorityInbox === true) {
+			return t('mail', 'Priority inbox')
 		}
 	}
 	if (folder.specialUse.includes('junk')) {
